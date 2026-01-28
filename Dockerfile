@@ -1,27 +1,25 @@
-# Chose a base image
+# chose base image
 
 FROM node:18-alpine
 
-# Set the working directory inside the container
-
+# set working directory
 WORKDIR /app
 
-# copy package.json and package.lock.json first (for caching)
+# copy package.json and package-lock.json for the caching of dependencies
 
 COPY package*.json ./
 
-# Install dependencies
+# install dependencies
 
-RUN npm install 
+RUN npm ci
 
-#  copy the rest of the app code
+# copy source files
 
 COPY . .
 
-# expose the port of the app run on
+# Expose port
 
-EXPOSE 3000
+EXPOSE 8000
 
-# Define the default command to run the app
-
-CMD [ "node" , "server.js" ]
+# Run the app
+CMD [ "node" , "server" ]
