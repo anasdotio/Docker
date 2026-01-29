@@ -11,6 +11,9 @@ const PORT = 8000;
 app.get("/health", (req, res) => {
   res.status(200).json({ message: "OK" });
 });
+app.get("/", (req, res) => {
+  res.status(200).json({ message: "Hello World !" });
+});
 
 app
   .listen(PORT, () => {
