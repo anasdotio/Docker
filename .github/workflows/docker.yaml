@@ -1,4 +1,4 @@
-name: "publsih docker image"
+name: "Publish Docker Image"
 
 on:
   push:
@@ -6,11 +6,11 @@ on:
       - main
 
 jobs:
-  build:
+  build-and-push:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Login to DockerHub
         uses: docker/login-action@v3
@@ -20,9 +20,9 @@ jobs:
 
       - name: Build and Push Docker image
         uses: docker/build-push-action@v4
-        with: 
+        with:
           context: .
-          push : true
-          tags: ${{secrets.DOCKER_USERNAME}}/docker:latest
-      - name: Image digest
-        run: echo ${{ steps.docker_build.outputs.digest }}
+          push: true
+          tags: |
+            ${{secrets.DOCKER_USERNAME}}/docker:latest
+            ${{secrets.DOCKER_USERNAME}}/docker:${{ github.sha }}
